@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""MESSIIIIIIIIIII"""
-from typing import Union
+"""
+Module for summing a mixed list of integers and floats.
+"""
+from typing import List, Union
 
 
-def to_kv(k: str, v:Union[int, float]) -> tuple[str, float]:
-    """THis is about the annotation"""
-    v_square = v ** 2
-    return (k, v_square)
+def sum_mixed_list(mxd_lst: List[Union[int, float]]) -> float:
+    """
+    Returns the sum of a list containing integers and floats as a float.
+    """
+    return float(sum(mxd_lst))
