@@ -67,7 +67,7 @@ def replay(method: Callable) -> None:
     """Display the history of calls of a particular function."""
     r = method.__self__._redis
     name = method.__qualname__
-    count = r.get(name).decode("utf-8")
+    count = int(r.get(name) or 0)
     inputs = r.lrange(name + ":inputs", 0, -1)
     outputs = r.lrange(name + ":outputs", 0, -1)
     print("{} was called {} times:".format(name, count))
