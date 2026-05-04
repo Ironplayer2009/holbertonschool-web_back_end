@@ -40,13 +40,15 @@ class Cache:
     @call_history
     @count_calls
     def store(self, data: Union[str, bytes, int, float]) -> str:
-        """Store data in Redis under a randomly generated UUID key and return the key."""
+        """Store data in Redis under a randomly generated UUID key."""
         key = str(uuid.uuid4())
         self._redis.set(key, data)
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None) -> Union[str, bytes, int, float, None]:
-        """Retrieve data from Redis and optionally apply a conversion function."""
+    def get(self, key: str,
+            fn: Optional[Callable] = None) -> Union[
+            str, bytes, int, float, None]:
+        """Retrieve data from Redis and optionally apply a conversion."""
         data = self._redis.get(key)
         if data is None:
             return None
@@ -72,4 +74,5 @@ def replay(method: Callable) -> None:
     outputs = r.lrange(name + ":outputs", 0, -1)
     print("{} was called {} times:".format(name, count))
     for inp, out in zip(inputs, outputs):
-        print("{}(*{}) -> {}".format(name, inp.decode("utf-8"), out.decode("utf-8")))
+        print("{}(*{}) -> {}".format(
+            name, inp.decode("utf-8"), out.decode("utf-8")))
