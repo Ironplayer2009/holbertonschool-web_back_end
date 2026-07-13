@@ -1,15 +1,15 @@
-async function handleResponseFromAPI(promise) {
-  try {
-    await promise;
-    return {
-      status: 200,
-      body: 'success',
-    };
-  } catch (error) {
-    return Error();
-  } finally {
-    console.warn('Got a response from the API');
-  }
+function handleResponseFromAPI(promise) {
+  return (
+    promise
+      .then(() => ({
+        status: 200,
+        body: 'success',
+      }))
+      .catch(() => Error())
+      .finally(() => {
+        console.warn('Got a response from the API');
+      })
+  );
 }
 
 export default handleResponseFromAPI;
